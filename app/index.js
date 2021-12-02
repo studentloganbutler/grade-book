@@ -1,7 +1,10 @@
 import express from "express";
 import config from "./config.js";
+import router from "./routes/index.js";
 
 const app = express();
+
+app.use("/api", router);
 
 app.get("/", (_, res) => {
   res.send("Hello World");
