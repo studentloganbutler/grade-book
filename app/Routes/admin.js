@@ -1,4 +1,5 @@
 import { Router } from "express";
+import adminController from "../controllers/admin.js";
 
 const router = new Router();
 
@@ -7,7 +8,8 @@ router.get("/", (_, res) => {
 });
 
 router.post("/register", (req, res) => {
-  console.log(req.body);
+  const { username, password } = req.body;
+  adminController.create(username, password);
   res.send("Post request to register");
 });
 
