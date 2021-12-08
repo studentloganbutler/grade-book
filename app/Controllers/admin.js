@@ -4,8 +4,19 @@ import client from "../client.js";
 const admin = client.db(config.db.name).collection("admin");
 
 export default {
-  create(username, password) {
+  async create(username, password) {
     // Check for existing user in database
-    console.log(username, password, "from admin controller");
+    const existingUser = admin.findOne({ username });
+
+    if (existingUser) {
+      throw new Error("User already exists");
+    }
+
+    // TODO: encrypt password
+
+    // TODO: Insert one admin into database
+
+    // TODO:
   },
+  async show(username, password) {},
 };
