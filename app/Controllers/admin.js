@@ -13,12 +13,23 @@ export default {
       throw new Error("User already exists");
     }
 
-    // TODO: encrypt password
     const hash = await bcrypt.hash(password, 10);
-
-    // TODO: Insert one admin into database
 
     return admin.insertOne({ username, password: hash });
   },
-  // async show(username, password) {},
+  async show(username, password) {
+    const user = await admin.findOne({ username });
+
+    if (!user) {
+      throw new Error("Unable to log in");
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) {
+      throw new Error("Invalid login");
+    }
+
+    return user;
+  },
 };
