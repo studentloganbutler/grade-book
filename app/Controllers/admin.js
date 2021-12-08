@@ -1,5 +1,6 @@
 import config from "../config.js";
 import client from "../client.js";
+import bcrypt from "bcrypt";
 
 const admin = client.db(config.db.name).collection("admin");
 
@@ -13,10 +14,9 @@ export default {
     }
 
     // TODO: encrypt password
+    const hash = await bcrypt.hash(password, 10);
 
     // TODO: Insert one admin into database
-
-    // TODO:
   },
   async show(username, password) {},
 };
