@@ -17,6 +17,8 @@ export default {
     const hash = await bcrypt.hash(password, 10);
 
     // TODO: Insert one admin into database
+
+    return admin.insertOne({ username, password: hash });
   },
-  async show(username, password) {},
+  // async show(username, password) {},
 };
