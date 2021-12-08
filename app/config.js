@@ -9,6 +9,7 @@ export default {
     url: process.env.MONGO_URI,
   },
   encryption: {
+    expiresIn: process.env.EXPIRES_IN || "1d",
     saltRounds: process.env.SALT_ROUNDS || 10,
     secret: process.env.ENCRYPTION_SECRET || "secret",
   },
