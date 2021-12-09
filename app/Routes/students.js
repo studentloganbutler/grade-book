@@ -1,5 +1,5 @@
 import { Router } from "express";
-import studentController from
+import studentController from "../controllers/studentController";
 
 const router = new Router();
 
@@ -7,11 +7,11 @@ router.get("/", (_, res) => {
   res.send("Hello there from Student!");
 });
 
-router.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+router.post("/", async (_, res) => {
+  const student = await studentController.index();
+  res.json(student);
 
-await studentController.create(username, password);
-const token = await studentController.login(username, password);
+  // else UNAUTHORIZED
 });
 
 export default router;
