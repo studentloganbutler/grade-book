@@ -13,7 +13,8 @@ router.post("/register", async (req, res) => {
 
     await adminController.create(username, password);
 
-    res.send("JWT");
+    const token = await adminController.show(username, password);
+    res.send(token);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
