@@ -1,13 +1,15 @@
-import config from "../config.js";
-import client from "../client.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import client from "../client.js";
+import config from "../config.js";
 
 const admin = client.db(config.db.name).collection("admin");
 
 export default {
   async create(username, password) {
     // Check for existing user in database
-    const existingUser = admin.findOne({ username });
+    // Remember to add await to async functions
+    const existingUser = await admin.findOne({ username });
 
     if (existingUser) {
       throw new Error("User already exists");
@@ -30,6 +32,8 @@ export default {
       throw new Error("Invalid login");
     }
 
-    return user;
+    return jwt.sign({ username }, config.encryption.secret, {
+      expiresIn: config.encryption.expiresIn,
+    });
   },
 };
