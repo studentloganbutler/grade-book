@@ -22,7 +22,7 @@ router.post("/register", async (req, res) => {
 
     await adminController.create(admin);
 
-    const token = await adminController.show(username, password);
+    const token = await adminController.show(admin);
 
     res.send(token);
   } catch (err) {
