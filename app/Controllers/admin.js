@@ -19,7 +19,7 @@ export default {
 
     return admin.insertOne({ username, password: hash, role });
   },
-  async show(username, password) {
+  async show({ username, password }) {
     const user = await admin.findOne({ username });
 
     const valid = await bcrypt.compare(password, user.password);
@@ -32,7 +32,7 @@ export default {
       throw new Error("Invalid login");
     }
 
-    return jwt.sign({ username }, config.encryption.secret, {
+    return jwt.sign({ username, role: user.role }, config.encryption.secret, {
       expiresIn: config.encryption.expiresIn,
     });
   },
