@@ -7,10 +7,8 @@ router.get("/", (_, res) => {
   res.send("Hello there from Student!");
 });
 
-router.post("/", async (req, res) => {
-  console.log(req.isAuth);
-
-  if (req.isAuth) {
+router.post("/", async ({ isAuth }, res) => {
+  if (isAuth.role === "ADMIN") {
     const student = await studentController.index();
     res.json(student);
   } else {
