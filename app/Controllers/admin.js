@@ -21,13 +21,12 @@ export default {
   },
   async show({ username, password }) {
     const user = await admin.findOne({ username });
-    console.log(user, username, password);
-
-    const valid = await bcrypt.compare(password, user.password);
 
     if (!user) {
       throw new Error("Unable to log in");
     }
+
+    const valid = await bcrypt.compare(password, user.password);
 
     if (!valid) {
       throw new Error("Invalid login");
