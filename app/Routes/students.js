@@ -16,10 +16,10 @@ router.post("/", async ({ isAuth }, res) => {
   }
 });
 
-router.post("/:id", async ({ isAuth, params }, res) => {
+router.post("/:id", async ({ isAuth, params, body }, res) => {
   if (isAuth?.role === "ADMIN") {
     try {
-      const student = await studentController.show(params.id, req.body);
+      const student = await studentController.show(params.id, body);
       res.json(student);
     } catch ({ message }) {
       res.status(500).json({ message });
