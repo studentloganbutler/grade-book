@@ -4,10 +4,10 @@ import Assignment from "../models/assignment.js";
 
 const router = new Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async ({ isAuth, body }, res) => {
   try {
-    if (req.isAuth.role === "ADMIN") {
-      const assignment = new Assignment(req.body);
+    if (isAuth?.role === "ADMIN") {
+      const assignment = new Assignment(body);
 
       const error = assignment.validate();
 
@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
         throw new Error(error.join("\n"));
       }
 
-      const resp = await assignmentsController.create(req.body);
+      const resp = await assignmentsController.create(body);
 
       res.status(201).json({ resp });
     } else {
