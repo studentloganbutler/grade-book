@@ -16,4 +16,28 @@ router.post("/", async ({ isAuth }, res) => {
   }
 });
 
+router.post("/:id", async ({ isAuth, params }, res) => {
+  if (isAuth?.role === "ADMIN") {
+    try {
+      const student = await studentController.show(params.id, req.body);
+      res.json(student);
+    } catch ({ message }) {
+      res.status(500).json({ message });
+    }
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+});
+
+router.put("/:id/:gradeId", async ({ isAuth, params, body }, res) => {
+  if (isAuth?.role === "ADMIN") {
+    try {
+      const update = await studentController.update(params.id, params.id, body);
+      res.status(200).json(update);
+    } catch ({ message }) {
+      res.status(500).json({ message });
+    }
+  }
+});
+
 export default router;
